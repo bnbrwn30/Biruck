@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edu Boost - Mock Test</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="appContainer">
+    <!-- Header: Shown for test, review, and summary pages -->
+    <header class="header" id="mainHeader" style="display: none;">
+        <div class="header-buttons">
+            <button class="back-button" id="backButton">
+                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.707 17.293a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L8.414 11H18a1 1 0 110 2H8.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                </svg>
+            </button>
+            <button class="home-button" id="homeButton">
+                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" d="M12 2.25l-8.25 7.5h1.5v6a1.5 1.5 0 001.5 1.5h3.75a.75.75 0 00.75-.75v-3h3v3c0 .414.336.75.75.75H18a1.5 1.5 0 001.5-1.5v-6h1.5l-8.25-7.5z" fill-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Removed Time Left Display -->
+    </header>
+
+    <!-- Home Page -->
+    <div class="home-container" id="homeContainer">
+        <button class="theme-toggle-button" id="themeToggleButton">
+            <span class="dark-mode-icon">🌙</span>
+            <span class="light-mode-icon">☀️</span>
+        </button>
+        <div class="home-welcome-section">
+            <h1>Welcome, Biruck!</h1>
+            <p class="website-name">Your journey to knowledge starts with Edu Boost</p>
+            <!-- AI button is now first -->
+            <button class="ai-button" id="aiButton">AI</button>
+            <!-- Notes button is now a separate interface -->
+            <button class="notes-interface-button" id="notesInterfaceButton">Notes</button>
+            <!-- Flashcards button -->
+            <button class="flashcards-interface-button" id="flashcardsInterfaceButton">Flashcards</button>
+        </div>
+        <div class="subject-selection">
+            <h3>Choose Your Subject</h3>
+            <div class="subject-grid">
+                <button class="subject-item" data-subject="English">English</button>
+                <button class="subject-item" data-subject="Mathematics">Mathematics</button>
+                <button class="subject-item" data-subject="Physics">Physics</button>
+                <button class="subject-item" data-subject="SAT">SAT</button>
+                <button class="subject-item" data-subject="Biology">Biology</button>
+                <button class="subject-item" data-subject="Chemistry">Chemistry</button>
+            </div>
+            <!-- Removed Start Test Button -->
+        </div>
+    </div>
+
+    <!-- Test Mode Selection Modal -->
+    <div class="test-mode-modal-overlay" id="testModeModal">
+        <div class="test-mode-modal-content">
+            <h3>Select Test Mode</h3>
+            <div class="test-mode-option">
+                <input id="modePractice" name="testMode" type="radio" value="practice"/>
+                <label for="modePractice">
+                    <span>Practice Mode</span><br/>
+                    Review answers immediately after each question.
+                </label>
+            </div>
+            <div class="test-mode-option">
+                <input id="modeTest" name="testMode" type="radio" value="test"/>
+                <label for="modeTest">
+                    <span>Test Mode</span><br/>
+                    Review answers after completing the entire test.
+                </label>
+            </div>
+            <!-- Removed Start Test Button -->
+        </div>
+    </div>
+
+    <!-- Main Test Section -->
+    <div class="test-container" id="testContainer" style="display: none;">
+        <div class="sidebar" id="questionSidebar">
+            <!-- Question numbers will be dynamically loaded here -->
+        </div>
+        <div class="main-content">
+            <div id="questionsContainer">
+                <!-- Questions will be dynamically loaded here -->
+            </div>
+            <button class="submit-button" id="submitTestButton">Submit Test</button>
+        </div>
+    </div>
+
+    <!-- Test Progress Footer -->
+    <div class="test-progress-footer" id="testProgressFooter" style="display: none;">
+        <!-- Progress boxes will be dynamically loaded here -->
+    </div>
+
+    <!-- Pre-Submit Review Page -->
+    <div class="pre-submit-review-container" id="preSubmitReviewContainer">
+        <h2>Review Your Test</h2>
+        <div class="review-section">
+            <h3 class="section-title">Flagged Questions</h3>
+            <div class="review-table-container">
+                <div class="review-table-header">
+                    <div class="review-table-cell">#</div>
+                    <div class="review-table-cell">Question Text</div>
+                    <div class="review-table-cell">Status</div>
+                </div>
+                <div id="preSubmitFlaggedList">
+                    <!-- Flagged questions will be loaded here -->
+                </div>
+            </div>
+        </div>
+        <div class="review-section">
+            <h3 class="section-title">Unanswered Questions</h3>
+            <div class="review-table-container">
+                <div class="review-table-header">
+                    <div class="review-table-cell">#</div>
+                    <div class="review-table-cell">Question Text</div>
+                    <div class="review-table-cell">Status</div>
+                </div>
+                <div id="preSubmitUnansweredList">
+                    <!-- Unanswered questions will be loaded here -->
+                </div>
+            </div>
+        </div>
+        <button class="confirm-submit-button" id="confirmSubmitButton">Confirm & Submit</button>
+        <button class="action-button-summary" id="checkQuestionsAgainButton">Check Questions Again</button>
+    </div>
+
+    <!-- Generic Message/Confirmation Modal -->
+    <div class="message-modal-overlay" id="messageModal">
+        <div class="message-modal-content">
+            <p id="messageModalText"></p>
+            <div class="message-modal-buttons">
+                <!-- Buttons will be dynamically added here by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal (for deleting notes) -->
+    <div class="confirm-modal-overlay" id="deleteNoteConfirmModal">
+        <div class="confirm-modal-content">
+            <p>Are you sure you want to delete this note?</p>
+            <div class="confirm-modal-buttons">
+                <button class="btn-yes" id="deleteNoteConfirmYes">Yes, Delete</button>
+                <button class="btn-no" id="deleteNoteConfirmNo">No, Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal (for deleting flashcards) -->
+    <div class="confirm-modal-overlay" id="deleteFlashcardConfirmModal">
+        <div class="confirm-modal-content">
+            <p>Are you sure you want to delete this flashcard?</p>
+            <div class="confirm-modal-buttons">
+                <button class="btn-yes" id="deleteFlashcardConfirmYes">Yes, Delete</button>
+                <button class="btn-no" id="deleteFlashcardConfirmNo">No, Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Page -->
+    <div class="summary-container" id="summaryContainer">
+        <h2>Test Summary</h2>
+        <p class="summary-score" id="finalScoreDisplay">Your Score: --/--</p>
+
+        <div class="summary-section">
+            <h3 class="section-title">All Questions Review</h3>
+            <div class="review-table-container">
+                <div class="review-table-header">
+                    <div class="review-table-cell">#</div>
+                    <div class="review-table-cell">Question Text</div>
+                    <div class="review-table-cell">Status</div>
+                </div>
+                <div id="allQuestionsReviewList">
+                    <!-- All questions and their status will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <button class="action-button-summary" id="retakeTestButton">Retake Test</button>
+    </div>
+
+    <!-- Unified AI Modal -->
+    <div class="unified-ai-modal-overlay" id="unifiedAiModal">
+        <div class="unified-ai-modal-content">
+            <div class="unified-ai-modal-header">
+                 <div class="gemini-title-container">
+                    <span>Gemini</span>
+                    <span class="gemini-version">2.5 Flash ▼</span>
+                </div>
+                <button class="icon-button" id="unifiedAiModalCloseButton" title="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="unified-ai-content">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="ai-loading-indicator" id="aiLoadingIndicator" style="display: none;">
+                        <div class="ai-loading-spinner"></div>
+                        <span>Just a sec...</span>
+                    </div>
+                    <div class="chat-initial-state" id="chatInitialState">
+                        <h1>Hello, Biruck</h1>
+                        <div class="suggestion-chips">
+                            <span class="suggestion-chip" data-prompt="Explain a complex topic in simple terms.">Explain a complex topic in simple terms.</span>
+                            <span class="suggestion-chip" data-prompt="Give me a study plan for upcoming exams.">Give me a study plan for upcoming exams.</span>
+                            <span class="suggestion-chip" data-prompt="Summarize the key points of [topic].">Summarize the key points of [topic].</span>
+                            <span class="suggestion-chip" data-prompt="Research a topic">Research a topic</span>
+                        </div>
+                    </div>
+                    <!-- Chat messages will be appended here -->
+
+                </div>
+                <div class="chat-input-container-new" id="newChatInputContainer">
+                    <div class="main-input-bar">
+                        <input class="chat-input-new" id="chatInput" placeholder="Ask Gemini"/>
+                        <div class="input-icons">
+                            <button class="icon-button" id="sendButton" title="Send">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="secondary-actions">
+                        <button class="icon-button-plus" id="addImageButton" title="Add Image">
+                           +
+                        </button>
+                    </div>
+                </div>
+                <input accept="image/*" id="imageUpload" style="display: none;" type="file"/>
+                <div class="mt-2" id="imagePreviewContainer" style="display:none; text-align: center;">
+                    <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 100%; max-height: 150px; border-radius: 8px; margin-top: 10px;"/>
+                    <p id="imageFileName" class="text-sm text-gray-500"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notes Interface Page (formerly Notes Modal) -->
+    <div class="notes-interface-container" id="notesInterfaceContainer" style="display: none;">
+        <div class="notes-interface-header">
+            <h2>My Notes</h2>
+        </div>
+        <div class="notes-list-container" id="notesListContainer">
+            <!-- Note cards will be loaded here -->
+        </div>
+        <!-- Floating Action Button for adding new notes -->
+        <button class="fab-button" id="addNoteFab">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
+        <!-- FAB Options Container (hidden by default) -->
+        <div class="fab-options-container" id="fabOptionsContainer">
+            <button class="fab-option-button" id="addTextNoteButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16" style="margin-right:8px;">
+                  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                </svg>
+                Add Text Note
+            </button>
+            <button class="fab-option-button" id="addChecklistNoteButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16" style="margin-right:8px;">
+                  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                </svg>
+                Add Checklist
+            </button>
+        </div>
+    </div>
+
+    <!-- Flashcards Interface Page -->
+    <div class="flashcards-interface-container" id="flashcardsInterfaceContainer" style="display: none;">
+        <div class="flashcards-interface-header">
+            <h2 id="flashcardsHeaderTitle">My Flashcards</h2>
+            <div id="flashcardBreadcrumbs" class="flashcard-breadcrumbs" style="display: none;"></div>
+        </div>
+
+        <!-- Section for Folders -->
+        <div id="flashcardFoldersSection" class="flashcard-list-container">
+            <!-- Folders will be loaded here -->
+            <div class="flashcard-loader-container" id="foldersLoader">
+                <div class="flashcard-loader"></div>
+                Loading Folders...
+            </div>
+        </div>
+
+        <!-- Section for Sets within a Folder -->
+        <div id="flashcardSetsSection" class="flashcard-list-container" style="display: none;">
+            <!-- Sets will be loaded here -->
+            <div class="flashcard-loader-container" id="setsLoader">
+                <div class="flashcard-loader"></div>
+                Loading Sets...
+            </div>
+        </div>
+
+        <!-- Section for Flashcards within a Set -->
+        <div id="flashcardsInSection" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div class="flashcard-display-area" id="flashcardDisplayArea">
+                <!-- Flashcard will be loaded here -->
+            </div>
+            <div class="flashcard-controls">
+                <button class="flashcard-nav-button" id="prevFlashcardButton">Previous</button>
+                <button class="flashcard-action-button" id="flipFlashcardButton">Flip Card</button>
+                <button class="flashcard-nav-button" id="nextFlashcardButton">Next</button>
+            </div>
+            <p class="flashcard-count" id="flashcardCountDisplay">0/0</p>
+        </div>
+
+        <!-- Floating Action Button for adding new flashcards (contextual) -->
+        <button class="fab-button" id="addFlashcardFab">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
+        <!-- FAB Options for Flashcards (contextual) -->
+        <div class="fab-options-container" id="flashcardFabOptionsContainer">
+            <button class="fab-option-button" id="addNewFolderButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16" style="margin-right:8px;">
+                  <path d="m.5 3 .04.87a1.5 1.5 0 0 0-.342.96L.5 14.5A1.5 1.5 0 0 0 2 16h12a1.5 1.5 0 0 0 1.5-1.5V3.25a1.5 1.5 0 0 0-1.5-1.5H9.5l-.964-.964A1.5 1.5 0 0 0 7.043 0H2.25A1.5 1.5 0 0 0 .75 1.5v1C.75 2.72 1.03 3 1.372 3H.5ZM13.5 6a.5.5 0 0 1 .5.5V9h2.5a.5.5 0 0 1 0 1H14v2.5a.5.5 0 0 1-1 0V10h-2.5a.5.5 0 0 1 0-1H13V6.5a.5.5 0 0 1 .5-.5Z"/>
+                </svg>
+                Add New Folder
+            </button>
+            <button class="fab-option-button" id="addNewSetButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-collection-fill" viewBox="0 0 16 16" style="margin-right:8px;">
+                  <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5 0A.5.5 0 0 1 1 12.5V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v6.5a.5.5 0 0 1-.5.5h-13z"/>
+                </svg>
+                Add New Set
+            </button>
+            <button class="fab-option-button" id="addNewFlashcardButtonFromFab">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16" style="margin-right:8px;">
+                  <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                  <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+                Add New Flashcard
+            </button>
+        </div>
+    </div>
+
+    <!-- New Flashcard Input Modal (reused for adding flashcards to set) -->
+    <div class="new-flashcard-modal-overlay" id="newFlashcardModal">
+        <div class="new-flashcard-modal-content">
+            <h3>Add New Flashcard</h3>
+            <textarea id="newFlashcardQuestion" placeholder="Question"></textarea>
+            <textarea id="newFlashcardAnswer" placeholder="Answer"></textarea>
+            <div class="new-flashcard-modal-buttons">
+                <button class="btn-cancel" id="cancelNewFlashcard">Cancel</button>
+                <button class="btn-add" id="addNewFlashcard">Add Flashcard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Folder Modal -->
+    <div class="new-item-modal-overlay" id="newFolderModal">
+        <div class="new-item-modal-content">
+            <h3 id="newFolderModalTitle">Add New Folder</h3>
+            <input type="text" id="newFolderNameInput" placeholder="Folder Name"/>
+            <select id="newFolderSubjectSelect">
+                <option value="">Select Subject (Optional)</option>
+                <option value="English">English</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Physics">Physics</option>
+                <option value="SAT">SAT</option>
+                <option value="Biology">Biology</option>
+                <option value="Chemistry">Chemistry</option>
+            </select>
+            <div class="new-item-modal-buttons">
+                <button class="btn-cancel" id="cancelNewFolder">Cancel</button>
+                <button class="btn-add" id="saveFolderButton">Save Folder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Set Modal -->
+    <div class="new-item-modal-overlay" id="newSetModal">
+        <div class="new-item-modal-content">
+            <h3 id="newSetModalTitle">Add New Set</h3>
+            <input type="text" id="newSetTitleInput" placeholder="Set Title"/>
+            <div class="new-item-modal-buttons">
+                <button class="btn-cancel" id="cancelNewSet">Cancel</button>
+                <button class="btn-add" id="saveSetButton">Save Set</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Link to external JavaScript file -->
+<script type="module" src="script.js"></script>
+</body>
+</html>
